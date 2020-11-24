@@ -1,16 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/06 20:14:30 by ilmira            #+#    #+#             */
+/*   Updated: 2020/11/07 15:51:25 by ilmira           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
-t_rt *ft_clean (t_rt *r) {
-	int i;
-	t_light *al;
-	t_light *temp;
+t_rt	*ft_clean(t_rt *r)
+{
+	t_light	*al;
+	t_light	*temp;
 
-	//i = -1;
-	//while (i++)
-		free((void**)(r->obj));
-	//ft_memdel((void**)(r->obj));
+	free((void**)(r->obj));
 	r->obj = NULL;
-
 	al = r->light;
 	while (al)
 	{
@@ -25,12 +33,11 @@ t_rt *ft_clean (t_rt *r) {
 	return (r);
 }
 
-void ft_init(t_rt *r)
+void	ft_init(t_rt *r)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
-		if ((r->win = SDL_CreateWindow("RTv1", SDL_WINDOWPOS_UNDEFINED,
-										  SDL_WINDOWPOS_UNDEFINED, WIDTH,
-										  HEIGHT, SDL_WINDOW_SHOWN)))
+		if ((r->win = SDL_CreateWindow("RTv1", SDL_WINDOWPOS_UNDEFINED,\
+			SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)))
 			if ((r->ren = SDL_CreateRenderer(r->win, -1,
 												SDL_RENDERER_ACCELERATED)))
 				return ;
@@ -41,14 +48,11 @@ void ft_init(t_rt *r)
 
 int		main(int argc, char **argv)
 {
-	t_rt *r;
+	t_rt		*r;
 	SDL_Event	event;
 
 	if (argc != 2)
-	{
-		//ft_usage();
-		return (1);
-	}
+		ft_put_error("Usage: ./RTv1 [path of file]");
 	if (!(r = (t_rt *)malloc(sizeof(t_rt))))
 		ft_put_error("Allocation memory error");
 	r->count = 0;
@@ -61,10 +65,10 @@ int		main(int argc, char **argv)
 	SDL_RenderPresent(r->ren);
 	while (1)
 		while (SDL_PollEvent(&event))
-			if ((SDL_QUIT == event.type) || (SDL_KEYDOWN == event.type &&
-											 SDL_SCANCODE_ESCAPE == event.key.keysym.scancode))
+			if ((SDL_QUIT == event.type) || (SDL_KEYDOWN == event.type &&\
+				SDL_SCANCODE_ESCAPE == event.key.keysym.scancode))
 			{
-				//ft_clean(r);
+				ft_clean(r);
 				exit(0);
 			}
 }

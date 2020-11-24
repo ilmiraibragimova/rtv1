@@ -1,149 +1,111 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_trace.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/06 20:14:04 by ilmira            #+#    #+#             */
+/*   Updated: 2020/11/19 01:39:21 by ilmira           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
-void ft_clear_color(double *color)
-{
-	int i;
-
-	i = 0;
-	while (i < 3)
-	{
-		ft_memdel((void**)(&color[i]));
-		i++;
-	}
-}
-
-
-double closest_func(t_rt *r, t_vec vew, double t_min, double t_max, int i)
+double		closest_func(t_rt *r, t_raydata vew, double t_max, int i)
 {
 	double t;
 
-	if  (ft_strequ(r->obj[i].name, "sphere"))
-		t = ray_sphere( vew, r->cam.beg, r->obj[i]);
-	else if (ft_strequ(r->obj[i].name, "plane")) {
-		//printf("TY");
-		t = ft_ray_plane(vew, r->cam.beg, r->obj[i]);
+	if (ft_strequ(r->obj[i].name, "sphere"))
+		t = ray_sphere(vew, r->obj[i]);
+	else if (ft_strequ(r->obj[i].name, "plane"))
+	{
+		t = ft_ray_plane(vew, r->obj[i]);
 	}
 	else if (ft_strequ(r->obj[i].name, "cone"))
 	{
-		t = ft_ray_con(r->cam.beg, vew, &r->obj[i]);
+		t = ft_ray_con(vew, &r->obj[i]);
 		r->obj[i].t = t;
 	}
-	else if (ft_strequ(r->obj[i].name, "cylinder"))
+	else
 	{
-		t = ft_ray_cylinder(r->cam.beg, vew, &r->obj[i]);
+		t = ft_ray_cylinder(vew, &r->obj[i]);
 		r->obj[i].t = t;
 	}
-	if (t >= t_min && t <= t_max && t < r->closest_t)
+	if (t >= 0.00001 && t <= t_max && t < r->closest_t)
 	{
 		r->closest_t = t;
 		r->clos = i;
 	}
-	//printf("%f\n", r->closest_t);
 	return (r->closest_t);
 }
 
-/*void ft_traceray1(t_rt *r, t_vec vew, t_vec l, double t_min, int t_max)
+t_vec		ft_traceray(t_raydata ray, t_rt *r)
 {
-	int i;
-	double t;
-	r->shadow_t = INFINITY;
-	r->shadow = -1;
+	t_vec	s;
+	t_vec	s1;
 
-	i = 0;
-	//printf("am%d\n", r->amount_obj);
-	while(i < r->amount_obj)
-	{
-		if  (ft_strequ(r->obj[i].name, "sphere"))
-			t = ray_sphere(vew, l, r->obj[i]);
-		else if (ft_strequ(r->obj[i].name, "plane"))
-			//printf("TY");
-			t = ft_ray_plane(vew, r->cam.beg, r->obj[i]);
-		else if (ft_strequ(r->obj[i].name, "cone"))
-			//printf("TY");
-			t = ft_ray_con(l, vew, &r->obj[i]);
-		//else if (ft_strequ(r->obj[i].name, "cylinder"))
-			//printf("TY");
-			//t = ft_ray_cylinder(l, vew, &r->obj[i]);
-
-		if (t >= t_min && t < t_max && t < r->shadow_t)
-		{
-			r->shadow_t = t;
-			r->shadow = i;
-			//printf("s1");
-		}
-		//if (r->shadow != -1)
-			//printf("sh%d\n",r->shadow);
-		/*if (t[1] >= t_min && t[1] < t_max && t[1] < r->shadow_t)
-		{
-			r->shadow_t = t[1];
-			r->shadow = i;
-			//printf("s1");
-		}
-		i++;
-	}
-}*/
-
-double *ft_traceray(t_vec vew, t_rt *r)
-{
+	r->i = 0;
+	s1.x = 0;
+	s1.y = 0;
+	s1.z = 0;
 	r->closest_t = INFINITY;
 	r->clos = -1;
-	double *s;
-	double s1[3] = {0, 255, 0};
-	int i;
-
-	i = 0;
-	while(i < r->amount_obj)
+	while (r->i < r->amount_obj)
 	{
-		r->closest_t = closest_func(r, vew, 1, INFINITY, i);
-
-			//printf("s");
-		i++;
+		r->closest_t = closest_func(r, ray, INFINITY, r->i);
+		r->i++;
 	}
 	if (r->clos == -1)
 	{
 		s = s1;
 		return (s);
 	}
-	s = ft_lighting1(r, vew);
-	//printf("%ld\n", sizeof(t_light));
-	//printf("s");
+	s = ft_lighting1(r, ray);
 	return (s);
 }
 
-t_vec ft_vewport(int i, int j, t_cam cam)
+t_vec		get_direction(t_vector camera, int x, int y)
 {
-	t_vec t;
+	t_vec		direction;
+	t_vec		point;
 
-	t.x = (i + 0.5) / (double)WIDTH;
-	t.x = 2 * t.x - 1;
-	t.x = t.x * (V_W / (double)WIDTH);
-	t.y = (j + 0.5) / (double)HEIGHT;
-	t.y = 1 - (2 * t.y);
-	t.y = t.y * (V_H / (double)HEIGHT);
-	t.z = 1.0;
-	t = vec_rot(t, cam.angle);
-	return (t);
+	point = (t_vec){x - (WIDTH / 2), (HEIGHT / 2) - y, DIST};
+	point = rot(point, camera.roter);
+	direction = vec_norm(vec_sub(camera.point, point));
+	return (direction);
 }
 
-void ft_render(t_rt *r)
+t_raydata	creat_ray(double max_len, t_vec point, t_vec direction)
 {
-	int i;
-	int j;
-	double *color;
-	t_vec vew;
+	t_raydata	ray;
+
+	ray.t_max = max_len;
+	ray.point = point;
+	ray.direction = direction;
+	return (ray);
+}
+
+void		ft_render(t_rt *r)
+{
+	int			i;
+	int			j;
+	t_vec		color;
+	t_raydata	ray;
+
 	i = 0;
-
-	while (i < WIDTH) {
+	r->cam.roter = matr_rot(r->cam);
+	while (i < WIDTH)
+	{
 		j = 0;
-		while (j < HEIGHT) {
-			vew = ft_vewport(i, j, r->cam);
-			color = ft_traceray(vew, r);
-
-			//printf("%u\n", color[0]);
-			SDL_SetRenderDrawColor(r->ren, color[0], color[1], color[2], 255);
+		while (j < HEIGHT)
+		{
+			r->cam.direct = get_direction(r->cam, i, j);
+			ray = creat_ray(INFINITY, r->cam.point, r->cam.direct);
+			color = ft_traceray(ray, r);
+			SDL_SetRenderDrawColor(r->ren, color.x, color.y, color.z, 255);
 			SDL_RenderDrawPoint(r->ren, i, j);
 			j++;
-			//ft_clear_color(color);
 		}
 		i++;
 	}

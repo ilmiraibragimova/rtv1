@@ -1,44 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_normal.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/06 20:13:21 by ilmira            #+#    #+#             */
+/*   Updated: 2020/11/19 01:49:16 by ilmira           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
-t_vec ft_norm_sphere(t_vec p, t_rt *r)
+t_vec	ft_norm_sphere(t_vec p, t_rt *r)
 {
-	t_vec n = vec_sub(p, r->obj[r->clos].center);  //# вычисление нормали сферы в точке пересечения
-	n = vec_scale(n, 1 / vec_len(n));
+	t_vec n;
+
+	n = vec_sub(r->obj[r->clos].center, p);
+	n = vec_norm(n);
 	return (n);
 }
 
-t_vec ft_norm_plane(t_vec vew, t_vec p, t_rt *r)
+t_vec	ft_norm_plane(t_rt *r)
 {
-	if (vec_dot(vew, r->obj[r->clos].end) < 0)
-		return (r->obj[r->clos].end);
-	return (vec_scale(r->obj[r->clos].end, -1));
+	if (vec_dot(r->cam.direct, r->obj[r->clos].rot) < 0)
+		return (r->obj[r->clos].rot);
+	return (vec_scale(r->obj[r->clos].rot, -1));
 }
 
-t_vec ft_norm_con(t_vec vew, t_vec p, t_rt *r)
+t_vec	ft_norm_con(t_vec vew, t_vec p, t_rt *r)
+{
+	t_vec	normal;
+	double	k;
+	double	m;
+
+	k = tan(0.5 * (r->obj->radius * M_PI / 180.0));
+	m = r->closest_t * vec_dot(vew, r->obj[r->clos].rot) +\
+		vec_dot(vec_sub(r->obj[r->clos].center, r->cam.point),\
+		r->obj[r->clos].rot);
+	k = (k * k + 1.0) * m;
+	normal = vec_sub(r->obj[r->clos].center, p);
+	normal = vec_sub(vec_scale(r->obj[r->clos].rot, k), normal);
+	normal = vec_norm(normal);
+	return (normal);
+}
+
+t_vec	ft_norm_cylinder(t_vec vew, t_vec p, t_rt *r)
 {
 	double	m;
 	t_vec	n;
 
-	r->obj->end = vec_norm(r->obj->end);
-	m = r->closest_t * vec_dot(vew, r->obj[r->clos].end) +
-	    vec_dot(vec_sub(r->cam.beg, r->obj[r->clos].center), r->obj[r->clos].end);
-	n = vec_scale(vec_scale(r->obj[r->clos].end, m), (1 + r->obj[r->clos].radius * r->obj[r->clos].radius));
-	n = vec_norm(vec_sub(vec_sub(p, r->obj[r->clos].center), n));
-	if (vec_dot(vew, n) > 0.001)
-		n = vec_scale(n, -1);
+	r->obj->rot = vec_norm(r->obj->rot);
+	m = r->closest_t * vec_dot(vew, r->obj[r->clos].rot) +\
+		vec_dot(vec_sub(r->cam.point, r->obj[r->clos].center),\
+		r->obj[r->clos].rot);
+	n = vec_norm(vec_sub(vec_scale(r->obj[r->clos].rot, m), \
+	vec_sub(r->obj[r->clos].center, p)));
 	return (n);
 }
 
-t_vec ft_norm_cylinder(t_vec vew, t_vec p, t_rt *r)
+void	matr_normal(t_matr *m)
 {
-	double	m;
-	t_vec	n;
+	double	matr_len;
 
-	r->obj->end = vec_norm(r->obj->end);
-	m = r->closest_t * vec_dot(vew, r->obj[r->clos].end) +
-	    vec_dot(vec_sub(r->cam.beg, r->obj[r->clos].center), r->obj[r->clos].end);
-	n = vec_norm(vec_sub(vec_sub(p, r->obj[r->clos].center), vec_scale(r->obj[r->clos].end, m)));
-	if (vec_dot(vew, n) > 0.001)
-		n = vec_scale(n, -1);
-	return (n);
+	matr_len = sqrt(m->l * m->l + m->vec.x * m->vec.x + \
+		m->vec.y * m->vec.y + m->vec.z * m->vec.z);
+	m->l /= matr_len;
+	m->vec.x /= matr_len;
+	m->vec.y /= matr_len;
+	m->vec.z /= matr_len;
 }

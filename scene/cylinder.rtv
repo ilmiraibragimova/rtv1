@@ -1,0 +1,4 @@
+cam: 0 0 -2 0 0 0
+light: ambient 20 0 0 0 0 0 0
+light: point 50 20 0 0 0 0 0
+cylinder: 0 0 0 3 0 1 90 255 255 0 -1

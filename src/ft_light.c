@@ -1,143 +1,127 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_light.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/06 20:13:01 by ilmira            #+#    #+#             */
+/*   Updated: 2020/11/20 13:26:58 by ilmira           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
-void ft_light(char **box,t_rt *r)
+int		ft_shadow(t_rt *r, t_vec p, t_vecs pos)
 {
-	int i;
-	i = -1;
+	int			i;
+	t_raydata	ray;
 
-	t_light *begin;
-	if (r->light == NULL) {
-		r->light = (t_light *) malloc(sizeof(t_light));
-		r->light->type = ft_strdup(box[1]);
-		r->light->intensity = ((double) ft_atoi(box[2])) / 100;
-		r->light->position.x = ft_atoi(box[3]);
-		r->light->position.y = ft_atoi(box[4]);
-		r->light->position.z = ft_atoi(box[5]);
-		r->light->direction.x = ft_atoi(box[6]);
-		r->light->direction.y = ft_atoi(box[7]);
-		r->light->direction.z = ft_atoi(box[8]);
-		r->light->next = NULL;
-	}
-	else {
-		begin = r->light;
-		r->light = (t_light *)malloc(sizeof(t_light));
-		r->light->next = begin;
-		r->light->type = ft_strdup(box[1]);
-		r->light->intensity = ((double) ft_atoi(box[2])) / 100;
-		r->light->position.x = ft_atoi(box[3]);
-		r->light->position.y = ft_atoi(box[4]);
-		r->light->position.z = ft_atoi(box[5]);
-		r->light->direction.x = ft_atoi(box[6]);
-		r->light->direction.y = ft_atoi(box[7]);
-		r->light->direction.z = ft_atoi(box[8]);
-	}
-
-	//ft_clear_box(box, 9);
-}
-
-int		ft_shadow(t_rt *r, t_vec p, t_vec pos,  double t_min ,double t_max)
- {
-	int i;
-	double max_t;
-	double t;
-	t_vec dir;
-	t_vec tmp;
-
-	i = -1;
-	t = 0;
-	tmp = pos;
-	tmp = vec_sub(tmp, p);
-	max_t = vec_len(tmp);
-	dir = vec_norm(tmp);
-	p = vec_sum(p, vec_scale(dir, 0.000001));
-	while (++i < r->amount_obj) {
+	i = 0;
+	r->shadow_t = 0;
+	ray = creat_ray(pos.t_max, p, vec_norm(pos.l));
+	while (i < r->amount_obj && r->amount_obj != 1)
+	{
 		if (ft_strequ(r->obj[i].name, "sphere"))
-			t = ray_sphere(dir, p, r->obj[i]);
+			r->shadow_t = ray_sphere(ray, r->obj[i]);
 		else if (ft_strequ(r->obj[i].name, "plane"))
-		{//printf("TY");
-			t = ft_ray_plane(dir, p, r->obj[i]);}
+			r->shadow_t = ft_ray_plane(ray, r->obj[i]);
 		else if (ft_strequ(r->obj[i].name, "cone"))
-		{//printf("TY1");
-			t = ft_ray_con(p, dir, &r->obj[i]);}
+			r->shadow_t = ft_ray_con(ray, &r->obj[i]);
 		else if (ft_strequ(r->obj[i].name, "cylinder"))
-		{//printf("TY2");
-			t = ft_ray_cylinder(p, dir, &r->obj[i]);}
-		if (t >= t_min  && t < max_t)
+			r->shadow_t = ft_ray_cylinder(ray, &r->obj[i]);
+		if (r->shadow_t > 0.00001 && r->shadow_t < pos.t_max)
 			return (1);
+		i++;
 	}
 	return (0);
 }
 
-double lighting(t_rt *r, t_vec p, t_vec n, t_vec v, double s) {
-	double i = 0.0;
-	t_vec l;
-	double nl;
-	t_light *tmp;
-	tmp = r->light;
-	double t_max;
-	while (tmp != NULL) {
-		if (ft_strequ(tmp->type, "ambient"))
-		i += tmp->intensity;
-		else {
-			if (ft_strequ(tmp->type, "point"))
-			{
-				l = vec_sub(tmp->position, p);
-				t_max = 1;
-			}
-			else{
-				l = tmp->direction;
-				t_max = INFINITY;
-			}
-			if (ft_shadow(r, p, tmp->position, 0.00001, t_max) == 0)
-			//if (r->shadow == -1)
-			{
-				//printf("SH");
-				nl = vec_dot(n, l);
-				//printf("nl%f\n", nl);
-				if (nl > 0)
-					//printf("SH");
-					i += (tmp->intensity * nl / (vec_len(n) * vec_len(l)));
-				if (s != -1)
-				{
-					t_vec r1 = vec_sub(vec_scale(n, (2 * vec_dot(n, l))), l);
-					double r_dot_v = vec_dot(r1, v);
-					if (r_dot_v > 0)
-						i += tmp->intensity * pow(r_dot_v / (vec_len(r1) * vec_len(v)), s);
-				}
-			}
-			//else
-			//printf("SH");
+void	ft_lighting2(t_rt *r, t_light *tmp, t_vec l, t_raydata ray)
+{
+	t_vec	r1;
+	double	r_dot_v;
+	double	nl;
+	t_vec	n;
 
+	n = r->obj[r->clos].n;
+	nl = vec_dot(n, l);
+	if (((nl > 0) && (vec_dot(r->obj[r->clos].n, ray.direction) < 0))\
+		|| (nl < 0 && (vec_dot(r->obj[r->clos].n, ray.direction) > 0) \
+		&& bord(r, tmp)))
+	{
+		if (nl < 0)
+			nl = -nl;
+		r->intensity += (tmp->intensity * nl / (vec_len(n) * vec_len(l)));
+	}
+	if (r->obj[r->clos].specular != -1)
+	{
+		r1 = vec_sub(l, vec_scale(n, (2 * vec_dot(n, l))));
+		r_dot_v = vec_dot(r1, vec_scale(ray.direction, -1));
+		if (r_dot_v > 0 && nl > 0)
+			r->intensity += tmp->intensity * pow(r_dot_v /
+					(vec_len(r1) * vec_len(vec_scale(ray.direction, -1))),\
+					r->obj[r->clos].specular);
+	}
+}
+
+t_vecs	ft_lighting3(t_light *tmp, t_vecs vecs, t_vec p)
+{
+	if (ft_strequ(tmp->type, "point"))
+	{
+		vecs.l = vec_sub(p, tmp->position);
+		vecs.t_max = vec_len(vecs.l);
+		vecs.k = tmp->position;
+	}
+	else
+	{
+		vecs.l = vec_norm(tmp->direction);
+		vecs.t_max = INFINITY;
+		vecs.k = tmp->direction;
+	}
+	return (vecs);
+}
+
+double	lighting(t_rt *r, t_vec p, t_raydata vew)
+{
+	t_vecs	vecs;
+	t_light	*tmp;
+
+	r->intensity = 0.0;
+	tmp = r->light;
+	while (tmp != NULL)
+	{
+		if (ft_strequ(tmp->type, "ambient"))
+			r->intensity += tmp->intensity;
+		else
+		{
+			vecs = ft_lighting3(tmp, vecs, p);
+			if (ft_shadow(r, p, vecs) == 0)
+				ft_lighting2(r, tmp, vecs.l, vew);
 		}
 		tmp = tmp->next;
 	}
-	//printf("i=%f\n",i);
-	if (i > 1)
-	i = 1;
-	return (i);
-
+	if (r->intensity > 1)
+		r->intensity = 1;
+	return (r->intensity);
 }
 
-double *ft_lighting1(t_rt *r, t_vec vew) {
-	double s[3];
-	t_vec n;
+t_vec	ft_lighting1(t_rt *r, t_raydata vew)
+{
+	t_vec	s;
+	t_vec	p;
 
-	//s = (double *)malloc(sizeof(double) * 3);
-
-	t_vec p = vec_sum(r->cam.beg, vec_scale(vew, r->closest_t));  // вычисление пересечения
+	p = vec_sum(r->cam.point, vec_scale(r->cam.direct, r->closest_t));
 	if (ft_strequ(r->obj[r->clos].name, "sphere"))
-		n = ft_norm_sphere(p, r);
+		r->obj[r->clos].n = ft_norm_sphere(p, r);
 	else if (ft_strequ(r->obj[r->clos].name, "plane"))
-		n = ft_norm_plane(vew, p, r);
+		r->obj[r->clos].n = ft_norm_plane(r);
 	else if (ft_strequ(r->obj[r->clos].name, "cone"))
-		n = ft_norm_con(vew, p, r);
+		r->obj[r->clos].n = ft_norm_con(vew.direction, p, r);
 	else if (ft_strequ(r->obj[r->clos].name, "cylinder"))
-		n = ft_norm_cylinder(vew, p, r);
-		//printf("TY");
-	s[0] = r->obj[r->clos].color[0] * lighting(r, p, n, vec_scale(vew, -1), r->obj->specular);
-	s[1] = r->obj[r->clos].color[1] * lighting(r, p, n, vec_scale(vew, -1), r->obj->specular);
-	s[2] = r->obj[r->clos].color[2] * lighting(r, p, n, vec_scale(vew, -1), r->obj->specular);
-	//printf("col0%f\n",s[0]);
+		r->obj[r->clos].n = ft_norm_cylinder(vew.direction, p, r);
+	s.x = r->obj[r->clos].color[0] * lighting(r, p, vew);
+	s.y = r->obj[r->clos].color[1] * lighting(r, p, vew);
+	s.z = r->obj[r->clos].color[2] * lighting(r, p, vew);
 	return (s);
-	printf("col%f\n",r->obj->color[0]);
 }

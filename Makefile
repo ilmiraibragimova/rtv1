@@ -1,23 +1,38 @@
-#NAME = RTv1
-SRC = src/main.c\
-		src/ft_light.c\
-		src/parser.c\
-		src/ft_sphere.c\
-		src/ft_trace.c\
-		src/ft_count.c\
-		src/ft_plane.c\
-		src/ft_cam.c\
-		src/ft_con.c\
-		src/ft_cylinder.c\
-		src/ft_normal.c\
-		src/ft_valid.c
-		
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/11/07 18:40:56 by ilmira            #+#    #+#              #
+#    Updated: 2020/11/17 15:21:33 by ilmira           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
+NAME = RTv1
+SRC_DIR = ./src/
+SRCF = main.c\
+		ft_light.c\
+		parser.c\
+		ft_sphere.c\
+		ft_trace.c\
+		ft_count.c\
+		ft_plane.c\
+		ft_cam.c\
+		ft_con.c\
+		ft_cylinder.c\
+		ft_normal.c\
+		ft_valid.c\
+		ft_rot.c\
+		ft_board.c
 
-
-OBJ = $(SRC:.c=.o)
-LIBS = libft/libft.a vec_op/veclib.a
-HEADERS = -I ./includes -I ./libft -I ./vec_op
+OBJ_DIR = ./obj/
+SRC = $(addprefix $(SRC_DIR), $(SRCF))
+OBJ = $(addprefix $(OBJ_DIR), $(OBJF))
+OBJF = $(SRCF:.c=.o)
+LIBS = libft/libft.a veclib/veclib.a
+HEADERS = -I ./includes -I ./libft -I ./veclib
 HDR = includes/rtv1.h
 FLAGS = -Wall -Wextra
 CGFLAGS =  -framework OpenGL -framework AppKit
@@ -32,32 +47,34 @@ FRAMEWORKS	=	-F./frameworks \
 				-framework SDL2 -framework SDL2_ttf -framework SDL2_image \
 				-framework SDL2_mixer
 
-all: $(NAME)
+all: obj $(NAME)
 
-$(NAME): libft/libft.a vec_op/veclib.a $(OBJ) $(HDR)
-	@gcc $(FLAGS) $(CGFLAGS) $(FRAMEWORKS) $(OBJ) $(LIBS) -o $(NAME)
+obj:
+	mkdir -p $(OBJ_DIR)
+
+$(NAME): libft/libft.a veclib/veclib.a $(OBJ) $(HDR)
+	gcc $(FLAGS) $(CGFLAGS) $(FRAMEWORKS) $(OBJ) $(LIBS) -o $(NAME)
 	@printf "Compailing RTv1 done\n"
 
-.c.o: $(HDR)
-	@gcc $(FLAGS) $(INCLUDES) $(HEADERS) -c $< -o $@
+$(OBJ_DIR)%.o:$(SRC_DIR)%.c $(HDR)
+	gcc $(FLAGS) $(INCLUDES) $(HEADERS) -c $< -o $@
 
 clean:
 	@make clean -C libft
-	@make clean -C vec_op
-	@rm -rf $(OBJ)
-	@printf "All objects of RTv1 was deleted\n"
+	@make clean -C veclib
+	@rm -Rf $(OBJ)
+	@rm -Rf obj
 
-fclean:
+fclean: clean
 	@make fclean -C libft
-	@make fclean -C vec_op
-	@rm -rf $(OBJ)
+	@make fclean -C veclib
 	@rm -rf $(NAME)
 	@printf "All objects and binary of RTv1 was deleted\n"
 
 libft/libft.a:
 	@make -C libft
 
-vec_op/veclib.a:
-	@make -C vec_op 
+veclib/veclib.a:
+	@make -C veclib
 
 re: fclean all
