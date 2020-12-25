@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sphere.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aeclipso <aeclipso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 20:13:47 by ilmira            #+#    #+#             */
-/*   Updated: 2020/11/18 13:55:08 by ilmira           ###   ########.fr       */
+/*   Updated: 2020/11/25 19:29:20 by aeclipso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
-void	ft_sphere(char **box, t_rt *r)
-{
-	r->obj[r->count].center.x = (double)(ft_atoi(box[1]));
-	r->obj[r->count].center.y = (double)(ft_atoi(box[2]));
-	r->obj[r->count].center.z = (double)(ft_atoi(box[3]));
-	r->obj[r->count].radius = (double)(ft_atoi(box[4]));
-	if (r->obj[r->count].radius < 0.1 || ft_atoi(box[5]) < 0 ||\
-	ft_atoi(box[6]) < 0 || ft_atoi(box[7]) < 0)
-	{
-		ft_clear_box(box, 9);
-		ft_put_error("Wrong input for sphere\n");
-	}
-	r->obj[r->count].color[0] = (unsigned char)(ft_atoi(box[5]));
-	r->obj[r->count].color[1] = (unsigned char)(ft_atoi(box[6]));
-	r->obj[r->count].color[2] = (unsigned char)(ft_atoi(box[7]));
-	r->obj[r->count].specular = (double)(ft_atoi(box[8]));
-	r->obj[r->count].name = "sphere";
-	r->count++;
-	ft_clear_box(box, 9);
-}
 
 double	ft_get_t(double k1, double k2, double k3)
 {

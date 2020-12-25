@@ -1,4 +1,34 @@
-cam: 0 0 0 0 0 0
-light: ambient 15 0 0 0 0 0 0
-light: point 40 0 16 0 0 0 0
-sphere: 0 0 4 1 255 0 0 15
+cam:
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    angle-x: 0
+    angle-y: 0
+    angle-z: 0
+light:
+    light-type: ambient
+    intensity: 15
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 40
+    point-x: 0
+    point-y: 16
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+sphere:
+    point-x: 0
+    point-y: 0
+    point-z: 4
+    radius: 1
+    red: 255
+    green: 0
+    blue: 0
+    specular: 15

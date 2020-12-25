@@ -3,29 +3,35 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+         #
+#    By: aeclipso <aeclipso@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/07 18:40:56 by ilmira            #+#    #+#              #
-#    Updated: 2020/11/17 15:21:33 by ilmira           ###   ########.fr        #
+#    Updated: 2020/11/25 19:28:56 by aeclipso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = RTv1
 SRC_DIR = ./src/
 SRCF = main.c\
-		ft_light.c\
-		parser.c\
-		ft_sphere.c\
-		ft_trace.c\
-		ft_count.c\
-		ft_plane.c\
-		ft_cam.c\
+		error.c\
+		error2.c\
+		ft_board.c\
 		ft_con.c\
 		ft_cylinder.c\
+		ft_light.c\
 		ft_normal.c\
-		ft_valid.c\
+		ft_plane.c\
 		ft_rot.c\
-		ft_board.c
+		ft_sphere.c\
+		ft_trace.c\
+		parser.c\
+		parse_cam.c\
+		parse_cone.c\
+		parse_cylinder.c\
+		parse_light.c\
+		parse_plane.c\
+		parse_rules.c\
+		parse_sphere.c
 
 OBJ_DIR = ./obj/
 SRC = $(addprefix $(SRC_DIR), $(SRCF))
@@ -34,7 +40,7 @@ OBJF = $(SRCF:.c=.o)
 LIBS = libft/libft.a veclib/veclib.a
 HEADERS = -I ./includes -I ./libft -I ./veclib
 HDR = includes/rtv1.h
-FLAGS = -Wall -Wextra
+FLAGS = -Wall -Wextra -Werror -g
 CGFLAGS =  -framework OpenGL -framework AppKit
 INCLUDES	=	-I./frameworks/SDL2.framework/Versions/A/Headers \
 				-I./frameworks/SDL2_ttf.framework/Versions/A/Headers \

@@ -1,5 +1,52 @@
-cam: 0 0 -2 0 0 0
-light: ambient 20 0 0 0 0 0 0
-light: point 60 -4 0 -6 0 0 0
-sphere: 0 0 0 4 0 191 255 1000
-sphere: 3 0 0 2 255 215 0 1000
+cam:
+    point-x: 0
+    point-y: 0
+    point-z: -3
+    angle-x: 35
+    angle-y: 0
+    angle-z: 0
+light:
+    light-type: ambient
+    intensity: 20
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 60
+    point-x: -4
+    point-y: 0
+    point-z: -6
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 60
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+sphere:
+    point-x: -2
+    point-y: 0
+    point-z: 0
+    radius: 4
+    red: 0
+    green: 191
+    blue: 255
+    specular: 1000
+sphere:
+    point-x: 3
+    point-y: 0
+    point-z: 0
+    radius: 2
+    red: 255
+    green: 215
+    blue: 0
+    specular: 1000

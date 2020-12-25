@@ -1,4 +1,37 @@
-cam: 0 0 -2 0 0 0
-light: ambient 20 0 0 0 0 0 0
-light: point 50 20 0 0 0 0 0
-cylinder: 0 0 0 3 0 1 90 255 255 0 -1
+cam:
+    point-x: 0
+    point-y: 0
+    point-z: -50
+    angle-x: 0
+    angle-y: 0
+    angle-z: 0
+light:
+    light-type: ambient
+    intensity: 20
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 50
+    point-x: 20
+    point-y: 0
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+cylinder:
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    radius: 10
+    rot-x: 0
+    rot-y: 1
+    rot-z: 0
+    red: 255
+    green: 255
+    blue: 0
+    specular: -1

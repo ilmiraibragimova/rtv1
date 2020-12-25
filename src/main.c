@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aeclipso <aeclipso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 20:14:30 by ilmira            #+#    #+#             */
-/*   Updated: 2020/11/07 15:51:25 by ilmira           ###   ########.fr       */
+/*   Updated: 2020/11/25 19:57:43 by aeclipso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
+
+void	ft_put_error(char *s)
+{
+	write(1, s, ft_strlen(s));
+	write(1, "\n", 1);
+	exit(1);
+}
 
 t_rt	*ft_clean(t_rt *r)
 {

@@ -1,9 +1,89 @@
-cam: 0 0 -40 0 0 0
-light: ambient 30 0 0 0 0 0 0
-light: point 30 0 -2 -40 0 0 0
-light: point 40 -2 -6 -40 0 0 0
-cylinder: -10  0  15 60 10 10 0 0 255 0 -1
-plane: 0 0 60 0 0 10 255 255 255 -1
-plane: 0 -10 10 0 -10 0 255 255 255 -1
-sphere: 0 -5 20 8 255 0 0 500
-cone: 10 -2 12 80 -12 15 0 255 255 0 -1
+cam:
+    point-x: 0
+    point-y: 0
+    point-z: -40
+    angle-x: 0
+    angle-y: 0
+    angle-z: 0
+light:
+    light-type: point
+    intensity: 30
+    point-x: 0
+    point-y: -2
+    point-z: -40
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: ambient
+    intensity: 30
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 40
+    point-x: -2
+    point-y: -6
+    point-z: -40
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+cylinder:
+    point-x: -10
+    point-y: 0
+    point-z: 18
+    radius: 60
+    rot-x: 10
+    rot-y: 10
+    rot-z: 0
+    red: 0
+    green: 255
+    blue: 0
+    specular: -1
+plane:
+    point-x: 0
+    point-y: 0
+    point-z: 60
+    rot-x: 0
+    rot-y: 0
+    rot-z: 10
+    red: 255
+    green: 255
+    blue: 255
+    specular: -1
+plane:
+    point-x: 0
+    point-y: -10
+    point-z: 10
+    rot-x: 0
+    rot-y: -10
+    rot-z: 0
+    red: 255
+    green: 255
+    blue: 255
+    specular: -1
+sphere:
+    point-x: 0
+    point-y: -5
+    point-z: 20
+    radius: 8
+    red: 255
+    green: 0
+    blue: 0
+    specular: 500
+cone:
+    point-x: 10
+    point-y: -2
+    point-z: 12
+    radius: 80
+    rot-x: -12
+    rot-y: 15
+    rot-z: 0
+    red: 255
+    green: 255
+    blue: 0
+    specular: -1

@@ -1,4 +1,36 @@
-cam: 0 0 -25 0 0 0
-light: ambient 15 0 0 0 0 0 0
-light: point 80 0 3 0 0 0 0
-plane: 0 -1 0 0 -1  0 255 145 195 10
+cam:
+    point-x: 0
+    point-y: 0
+    point-z: -25
+    angle-x: 0
+    angle-y: 0
+    angle-z: 0
+light:
+    light-type: ambient
+    intensity: 15
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 80
+    point-x: 0
+    point-y: 3
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+plane:
+    point-x: 0
+    point-y: -1
+    point-z: 0
+    rot-x: 0
+    rot-y: -1
+    rot-z: 0
+    red: 255
+    green: 145
+    blue: 195
+    specular: 10

@@ -3,31 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aeclipso <aeclipso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:29:07 by ilmira            #+#    #+#             */
-/*   Updated: 2020/11/20 13:59:15 by ilmira           ###   ########.fr       */
+/*   Updated: 2020/11/25 19:44:56 by aeclipso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTV1_RTV1_H
 # define RTV1_RTV1_H
+# include <math.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <pthread.h>
-# include "libft.h"
+# include "../libft/include/libft.h"
 # include "veclib.h"
 # include <SDL2/SDL.h>
-# include <math.h>
 # define WIDTH 750
 # define HEIGHT 750
 # define DIST 750
-
-typedef struct	s_matr
-{
-	double			l;
-	t_vec			vec;
-}				t_matr;
 
 typedef struct	s_board
 {
@@ -38,6 +32,12 @@ typedef struct	s_board
 	double	z1;
 	double	z2;
 }				t_board;
+
+typedef struct	s_matr
+{
+	double			l;
+	t_vec			vec;
+}				t_matr;
 
 typedef struct	s_vector
 {
@@ -68,10 +68,10 @@ typedef struct	s_obj
 
 typedef struct	s_raydata
 {
-	double			t_max;
-	t_vec			direction;
-	t_vec			st_cent;
-	t_vec			point;
+	double		t_max;
+	t_vec		direction;
+	t_vec		st_cent;
+	t_vec		point;
 }				t_raydata;
 
 typedef struct	s_light
@@ -110,7 +110,6 @@ void			ft_cam(char **box, t_rt *r);
 void			ft_parser(char *arg, t_rt *r);
 void			ft_sphere(char **box, t_rt *r);
 t_vec			ft_lighting1(t_rt *r, t_raydata vew);
-void			ft_count_obj(t_rt *r, char *arg);
 void			ft_plane(t_rt *r, char **box);
 double			ft_ray_plane(t_raydata vew, t_obj obj);
 t_vec			ft_norm_sphere(t_vec p, t_rt *r);
@@ -132,4 +131,22 @@ t_vec			rot(t_vec vector, t_matr matr);
 t_raydata		creat_ray(double max_len, t_vec point, t_vec direction);
 void			matr_normal(t_matr *m);
 int				bord(t_rt *r, t_light *tmp);
+void			error_plane(void);
+void			error_cone(void);
+void			error_cyl(void);
+void			error_param(char *line);
+void			error_obj(char *line);
+void			error_spere(void);
+void			error_open(void);
+void			error_malloc(int fd, char *line);
+void			error_read(int fd);
+void			error_lite(void);
+int				valid_line(char *line);
+void			parse_cam(t_rt *r, int fd);
+void			parse_light(t_rt *r, int fd);
+void			parse_cone(t_rt *r, int fd);
+void			parse_sphere(t_rt *r, int fd);
+void			parse_plane(t_rt *r, int fd);
+void			parse_cylinder(t_rt *r, int fd);
+int				check_param(char *line);
 #endif

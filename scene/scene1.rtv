@@ -1,20 +1,196 @@
-cam: 0 0 -10 0 0 0
-light: ambient 10 0 0 0 0 0 0
-light: point 40 -25 2 10 0 0 0
-light: point 40 25 2 10 0 0 0
-cylinder: -13 0 45 20 0 1 0 255 255 255 500
-cylinder: 13 0 45 20 0 1 0 255 255 255 500
-cylinder: -13 0 24 20 0 1 0 255 255 255 500
-cylinder: 13 0 24 20 0 1 0 255 255 255 500
-plane: 0 -10 10 0 10 0 255 255 255 -1
-plane: 0 0 60 0 0 10 255 255 255 -1
-plane: 0 10 10 0 -10 0 255 255 255 -1
-sphere: -13 10 45 3 255 255 255 500
-sphere: -13 -10 45 3 255 255 255 500
-sphere: 13 -10 45 3 255 255 255 500
-sphere: 13 10 45 3 255 255 255 500
-sphere: -13 10 24 3 255 255 255 500
-sphere: -13 -10 24 3 255 255 255 500
-sphere: 13 10 24 3 255 255 255 500
-sphere: 13 -10 24 3 255 255 255 500
-sphere: 0 -6 24 2 255 0 0 500
+cam:
+    point-x: 0
+    point-y: 0
+    point-z: -10
+    angle-x: 0
+    angle-y: 0
+    angle-z: 0
+light:
+    light-type: ambient
+    intensity: 10
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 40
+    point-x: -25
+    point-y: 2
+    point-z: 10
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 40
+    point-x: 25
+    point-y: 2
+    point-z: 10
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+cylinder:
+    point-x: -13
+    point-y: 0
+    point-z: 45
+    radius: 20
+    rot-x: 0
+    rot-y: 1
+    rot-z: 0
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+cylinder:
+    point-x: 13
+    point-y: 0
+    point-z: 45
+    radius: 20
+    rot-x: 0
+    rot-y: 1
+    rot-z: 0
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+cylinder:
+    point-x: -13
+    point-y: 0
+    point-z: 24
+    radius: 20
+    rot-x: 0
+    rot-y: 1
+    rot-z: 0
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+cylinder:
+    point-x: 13
+    point-y: 0
+    point-z: 24
+    radius: 20
+    rot-x: 0
+    rot-y: 1
+    rot-z: 0
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+plane:
+    point-x: 0
+    point-y: -10
+    point-z: 10
+    rot-x: 0
+    rot-y: 10
+    rot-z: 0
+    red: 255
+    green: 255
+    blue: 255
+    specular: -1
+plane:
+    point-x: 0
+    point-y: 0
+    point-z: 60
+    rot-x: 0
+    rot-y: 0
+    rot-z: 10
+    red: 255
+    green: 255
+    blue: 255
+    specular: -1
+plane:
+    point-x: 0
+    point-y: 10
+    point-z: 10
+    rot-x: 0
+    rot-y: -10
+    rot-z: 0
+    red: 255
+    green: 255
+    blue: 255
+    specular: -1
+sphere:
+    point-x: -13
+    point-y: 10
+    point-z: 45
+    radius: 3
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+sphere:
+    point-x: -13
+    point-y: -10
+    point-z: 45
+    radius: 3
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+sphere:
+    point-x: 13
+    point-y: -10
+    point-z: 45
+    radius: 3
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+sphere:
+    point-x: 13
+    point-y: 10
+    point-z: 45
+    radius: 3
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+sphere:
+    point-x: -13
+    point-y: 10
+    point-z: 24
+    radius: 3
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+sphere:
+    point-x: -13
+    point-y: -10
+    point-z: 24
+    radius: 3
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+sphere:
+    point-x: 13
+    point-y: 10
+    point-z: 24
+    radius: 3
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+sphere:
+    point-x: 13
+    point-y: -10
+    point-z: 24
+    radius: 3
+    red: 255
+    green: 255
+    blue: 255
+    specular: 500
+sphere:
+    point-x: 0
+    point-y: -6
+    point-z: 24
+    radius: 2
+    red: 255
+    green: 0
+    blue: 0
+    specular: 500

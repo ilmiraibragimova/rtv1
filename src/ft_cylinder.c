@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cylinder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmira <ilmira@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aeclipso <aeclipso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 20:12:39 by ilmira            #+#    #+#             */
-/*   Updated: 2020/11/16 18:49:49 by ilmira           ###   ########.fr       */
+/*   Updated: 2020/11/25 19:29:43 by aeclipso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
-void	ft_cylinder(t_rt *r, char **box)
-{
-	r->obj[r->count].center.x = (double)(ft_atoi(box[1]));
-	r->obj[r->count].center.y = (double)(ft_atoi(box[2]));
-	r->obj[r->count].center.z = (double)(ft_atoi(box[3]));
-	r->obj[r->count].radius = (double)(ft_atoi(box[4])) / 10;
-	r->obj[r->count].rot.x = (double)(ft_atoi(box[5]));
-	r->obj[r->count].rot.y = (double)(ft_atoi(box[6]));
-	r->obj[r->count].rot.z = (double)(ft_atoi(box[7]));
-	if (r->obj[r->count].radius < 0.1 || ft_atoi(box[8]) < 0 ||\
-		ft_atoi(box[9]) < 0 || ft_atoi(box[10]) < 0)
-	{
-		ft_clear_box(box, 12);
-		ft_put_error("Wrong input for cylinder");
-	}
-	r->obj[r->count].color[0] = (unsigned char)(ft_atoi(box[8]));
-	r->obj[r->count].color[1] = (unsigned char)(ft_atoi(box[9]));
-	r->obj[r->count].color[2] = (unsigned char)(ft_atoi(box[10]));
-	r->obj[r->count].specular = (double)(ft_atoi(box[11]));
-	r->obj[r->count].name = "cylinder";
-	r->count++;
-	ft_clear_box(box, 12);
-}
 
 double	ft_ray_cylinder(t_raydata ray, t_obj *obj)
 {

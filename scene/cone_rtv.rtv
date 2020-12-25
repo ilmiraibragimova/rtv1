@@ -1,0 +1,37 @@
+cam:
+    point-x: 0
+    point-y: 0
+    point-z: -3
+    angle-x: 0
+    angle-y: 0
+    angle-z: 0
+light:
+    light-type: ambient
+    intensity: 20
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 80
+    point-x: -2
+    point-y: -2
+    point-z: -2
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+cone:
+    point-x: 0
+    point-y: 0
+    point-z: 0
+    radius: 40
+    rot-x: 0
+    rot-y: 1
+    rot-z: 0
+    red: 255
+    green: 0
+    blue: 0
+    specular: -1

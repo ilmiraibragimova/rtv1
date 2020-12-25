@@ -3,71 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hholly <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aeclipso <aeclipso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/09 15:27:47 by hholly            #+#    #+#             */
-/*   Updated: 2019/11/18 15:22:45 by hholly           ###   ########.fr       */
+/*   Created: 2019/10/18 14:23:08 by aeclipso          #+#    #+#             */
+/*   Updated: 2020/11/20 16:00:54 by aeclipso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_findn(char **line, char **s, int fd)
+static	int			butore(char **buf, char **line, int byte, int fd)
 {
-	char			*temp1;
-	size_t			len;
+	int				l;
+	char			*tmp;
+	char			*tmp1;
 
-	len = 0;
-	while (s[fd][len] != '\n' && s[fd][len] != '\0')
-		len++;
-	if (s[fd][len] == '\n')
-	{
-		*line = ft_strsub(s[fd], 0, len);
-		temp1 = ft_strdup(&(s[fd][len + 1]));
-		free(s[fd]);
-		s[fd] = temp1;
-		if (s[fd][0] == '\0')
-			ft_strdel(&(s[fd]));
-	}
+	tmp = NULL;
+	if (byte < 0)
+		return (-1);
+	l = ft_strchrnor(buf[fd], '\n', '\0');
+	if (buf[fd][l] != '\0')
+		tmp = ft_strdup_prot(buf[fd] + l + 1);
 	else
-	{
-		*line = ft_strdup(s[fd]);
-		ft_strdel(&(s[fd]));
-	}
+		tmp = ft_strnew(0);
+	*line = ft_strsub(buf[fd], 0, l);
+	tmp1 = buf[fd];
+	buf[fd] = tmp;
+	free(tmp1);
+	if ((buf[fd])[0] == 0)
+		ft_strdel(&buf[fd]);
 	return (1);
 }
 
-int			ftout(int ret, char **line, char *s[], int fd)
+int					get_next_line(const int fd, char **line)
 {
-	if (ret < 0)
-		return (-1);
-	if (ret == 0 && (s[fd] == NULL || s[fd][0] == '\0'))
-		return (0);
-	return (ft_findn(line, s, fd));
-}
+	int				byte;
+	char			temp[BUFF_SIZE + 1];
+	static	char	*buf[10240];
+	char			*liq;
 
-int			get_next_line(const int fd, char **line)
-{
-	static char	*s[OPEN_MAX];
-	char		buff[BUFF_SIZE + 1];
-	int			ret;
-	char		*temp;
-
-	if (fd < 0 || fd > OPEN_MAX || line == NULL)
+	if (fd < 0 || fd > 10240 || !line || BUFF_SIZE < 0)
 		return (-1);
-	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
+	while ((byte = read(fd, temp, BUFF_SIZE)) > 0)
 	{
-		buff[ret] = '\0';
-		if (s[fd] == NULL)
-			s[fd] = ft_strdup(buff);
+		if (byte < 0)
+			return (-1);
+		temp[byte] = 0;
+		if (buf[fd] == NULL)
+			buf[fd] = ft_strdup(temp);
 		else
 		{
-			temp = ft_strjoin(s[fd], buff);
-			free(s[fd]);
-			s[fd] = temp;
+			liq = ft_strjoin(buf[fd], temp);
+			free((void*)buf[fd]);
+			buf[fd] = liq;
 		}
-		if (ft_strchr(s[fd], '\n'))
+		if (ft_strchrn(buf[fd], '\n') >= 0)
 			break ;
 	}
-	return (ftout(ret, line, s, fd));
+	return ((buf[fd] == NULL && byte == 0) ? 0 : butore(buf, line, byte, fd));
 }
