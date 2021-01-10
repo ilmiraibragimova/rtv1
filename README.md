@@ -1,5 +1,5 @@
 # rtv1
-RTv1 is a simple ray tracing program. The project was developed as a part of 42 school program. It parses a 3D scene from a file and applies ray tracing algorithm to render the given scene.
+RTv1 is a simple ray tracer. It parses a 3D scene from a file and applies ray tracing algorithm to render the given scene.
 Note: this project was made for MacOS.
 
 Installation:
