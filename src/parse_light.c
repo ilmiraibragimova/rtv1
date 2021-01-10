@@ -1,3 +1,5 @@
+#include "rtv1.h"
+
 void		check_light(char *l_type)
 {
 	if (ft_strequ("ambient", l_type))

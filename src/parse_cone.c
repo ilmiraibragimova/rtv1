@@ -1,3 +1,5 @@
+#include "rtv1.h"
+
 void		check_cone(t_obj *cone)
 {
 	if (cone->radius < 0.1 ||
