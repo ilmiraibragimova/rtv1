@@ -12,8 +12,8 @@ If the scene is not valid, RTv1 will write corresponding error on standard outpu
 
 ![](https://github.com/ilmiraibragimova/rtv1/raw/master/image/image1.png)
 
-!(https://github.com/ilmiraibragimova/rtv1/raw/master/image/image2.png)
+![](https://github.com/ilmiraibragimova/rtv1/raw/master/image/image2.png)
 
-!(https://github.com/ilmiraibragimova/rtv1/raw/master/image/image3.png)
+![](https://github.com/ilmiraibragimova/rtv1/raw/master/image/image3.png)
 
 
