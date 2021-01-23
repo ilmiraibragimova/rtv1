@@ -41,6 +41,7 @@ sphere:
     green: 34
     blue: 82
     specular: 10
+    reflect: 0
 sphere:
     point-x: 0
     point-y: 2

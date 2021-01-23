@@ -23,6 +23,7 @@ int			check_param(char *line)
 	ft_strnequ(line, "    green:", 10) ||
 	ft_strnequ(line, "    blue:", 9) ||
 	ft_strnequ(line, "    specular:", 13) ||
+	ft_strnequ(line, "    reflect:", 12) ||
 	ft_strnequ(line, "    radius:", 11))
 		return (1);
 	else

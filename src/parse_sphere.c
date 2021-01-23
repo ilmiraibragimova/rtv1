@@ -28,6 +28,8 @@ void		parse_param_sphere(t_rt *r, char *line)
 		r->obj[r->count].color[2] = (unsigned char)(ft_atoi(&line[10]));
 	else if (ft_strnequ(line, "    specular:", 13))
 		r->obj[r->count].specular = (double)ft_atoi(&line[14]);
+	else if (ft_strnequ(line, "    reflect:", 12))
+		r->obj[r->count].reflect = ((double)ft_atoi(&line[13])) / 10;
 	else
 		error_param(line);
 }
@@ -38,7 +40,7 @@ void		parse_sphere(t_rt *r, int fd)
 	char	*line;
 
 	i = -1;
-	while (++i < 8)
+	while (++i < 9)
 	{
 		if (get_next_line(fd, &line) > 0)
 			parse_param_sphere(r, line);

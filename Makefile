@@ -40,7 +40,7 @@ OBJF = $(SRCF:.c=.o)
 LIBS = libft/libft.a veclib/veclib.a
 HEADERS = -I ./includes -I ./libft -I ./veclib
 HDR = includes/rtv1.h
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra #-Werror -g
 CGFLAGS =  -framework OpenGL -framework AppKit
 INCLUDES	=	-I./frameworks/SDL2.framework/Versions/A/Headers \
 				-I./frameworks/SDL2_ttf.framework/Versions/A/Headers \

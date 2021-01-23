@@ -1,6 +1,6 @@
 #include "rtv1.h"
 
-double		closest_func(t_rt *r, t_raydata vew, double t_max, int i)
+double		closest_func(t_rt *r, t_raydata vew, double t_max, int i, int f)
 {
 	double t;
 
@@ -8,7 +8,7 @@ double		closest_func(t_rt *r, t_raydata vew, double t_max, int i)
 		t = ray_sphere(vew, r->obj[i]);
 	else if (ft_strequ(r->obj[i].name, "plane"))
 	{
-		t = ft_ray_plane(vew, r->obj[i]);
+		t = ft_ray_plane(vew, r->obj[i], f);
 	}
 	else if (ft_strequ(r->obj[i].name, "cone"))
 	{
@@ -28,7 +28,7 @@ double		closest_func(t_rt *r, t_raydata vew, double t_max, int i)
 	return (r->closest_t);
 }
 
-t_vec		ft_traceray(t_raydata ray, t_rt *r)
+t_vec		ft_traceray(t_raydata ray, t_rt *r, int depth, int f)
 {
 	t_vec	s;
 	t_vec	s1;
@@ -41,7 +41,7 @@ t_vec		ft_traceray(t_raydata ray, t_rt *r)
 	r->clos = -1;
 	while (r->i < r->amount_obj)
 	{
-		r->closest_t = closest_func(r, ray, INFINITY, r->i);
+		r->closest_t = closest_func(r, ray, INFINITY, r->i, f);
 		r->i++;
 	}
 	if (r->clos == -1)
@@ -49,7 +49,7 @@ t_vec		ft_traceray(t_raydata ray, t_rt *r)
 		s = s1;
 		return (s);
 	}
-	s = ft_lighting1(r, ray);
+	s = ft_lighting1(r, ray, depth);
 	return (s);
 }
 
@@ -90,7 +90,7 @@ void		ft_render(t_rt *r)
 		{
 			r->cam.direct = get_direction(r->cam, i, j);
 			ray = creat_ray(INFINITY, r->cam.point, r->cam.direct);
-			color = ft_traceray(ray, r);
+			color = ft_traceray(ray, r, 5, 0);
 			SDL_SetRenderDrawColor(r->ren, color.x, color.y, color.z, 255);
 			SDL_RenderDrawPoint(r->ren, i, j);
 			j++;

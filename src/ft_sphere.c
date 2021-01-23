@@ -15,8 +15,10 @@ double	ft_get_t(double k1, double k2, double k3)
 		t[1] = (-k2 - sqrt(discriminant)) / (2 * k1);
 		if ((t[0] < t[1] && t[0] > 0.0001) || (t[1] < 0 && t[0] > 0.00001))
 			return (t[0]);
-		else
+		else if ((t[1] < t[0] && t[1] > 0.0001) || (t[0] < 0 && t[1] > 0.00001))
 			return (t[1]);
+		else
+			return (INFINITY);
 	}
 }
 

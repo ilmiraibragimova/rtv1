@@ -34,6 +34,8 @@ void		parse_param_cyl(t_rt *r, char *line)
 		r->obj[r->count].color[2] = (ft_atoi(&line[10]));
 	else if (ft_strnequ(line, "    specular:", 13))
 		r->obj[r->count].specular = (double)ft_atoi(&line[14]);
+	else if (ft_strnequ(line, "    reflect:", 12))
+		r->obj[r->count].reflect = (double)ft_atoi(&line[13]);
 	else
 		error_param(line);
 }

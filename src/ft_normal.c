@@ -10,9 +10,9 @@ t_vec	ft_norm_sphere(t_vec p, t_rt *r)
 	return (n);
 }
 
-t_vec	ft_norm_plane(t_rt *r)
+t_vec	ft_norm_plane(t_rt *r, t_raydata vew)
 {
-	if (vec_dot(r->cam.direct, r->obj[r->clos].rot) < 0)
+	if (vec_dot(vew.direction, r->obj[r->clos].rot) < 0)
 		return (r->obj[r->clos].rot);
 	return (vec_scale(r->obj[r->clos].rot, -1));
 }

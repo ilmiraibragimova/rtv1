@@ -16,7 +16,7 @@ light:
     direction-z: 0
 light:
     light-type: point
-    intensity: 40
+    intensity: 30
     point-x: -25
     point-y: 2
     point-z: 10
@@ -25,10 +25,19 @@ light:
     direction-z: 0
 light:
     light-type: point
-    intensity: 40
-    point-x: 25
-    point-y: 2
-    point-z: 10
+    intensity: 30
+    point-x: 0
+    point-y: 4
+    point-z: 24
+    direction-x: 0
+    direction-y: 0
+    direction-z: 0
+light:
+    light-type: point
+    intensity: 30
+    point-x: 0
+    point-y: 0
+    point-z: 50
     direction-x: 0
     direction-y: 0
     direction-z: 0
@@ -91,6 +100,7 @@ plane:
     green: 255
     blue: 255
     specular: -1
+    reflect: 6
 plane:
     point-x: 0
     point-y: 0
@@ -98,10 +108,23 @@ plane:
     rot-x: 0
     rot-y: 0
     rot-z: 10
-    red: 255
-    green: 255
-    blue: 255
+    red: 0
+    green: 0
+    blue: 0
     specular: -1
+    reflect: 9
+plane:
+    point-x: 0
+    point-y: 0
+    point-z: -15
+    rot-x: 0
+    rot-y: 0
+    rot-z: 10
+    red: 0
+    green: 255
+    blue: 0
+    specular: -1
+    reflect: 5
 plane:
     point-x: 0
     point-y: 10
@@ -109,10 +132,11 @@ plane:
     rot-x: 0
     rot-y: -10
     rot-z: 0
-    red: 255
-    green: 255
+    red: 0
+    green: 0
     blue: 255
     specular: -1
+    reflect: 4
 sphere:
     point-x: -13
     point-y: 10
@@ -122,6 +146,7 @@ sphere:
     green: 255
     blue: 255
     specular: 500
+    reflect: 0
 sphere:
     point-x: -13
     point-y: -10
@@ -131,6 +156,7 @@ sphere:
     green: 255
     blue: 255
     specular: 500
+    reflect: 0
 sphere:
     point-x: 13
     point-y: -10
@@ -140,6 +166,7 @@ sphere:
     green: 255
     blue: 255
     specular: 500
+    reflect: 0
 sphere:
     point-x: 13
     point-y: 10
@@ -149,6 +176,7 @@ sphere:
     green: 255
     blue: 255
     specular: 500
+    reflect: 0
 sphere:
     point-x: -13
     point-y: 10
@@ -158,6 +186,7 @@ sphere:
     green: 255
     blue: 255
     specular: 500
+    reflect: 0
 sphere:
     point-x: -13
     point-y: -10
@@ -167,6 +196,7 @@ sphere:
     green: 255
     blue: 255
     specular: 500
+    reflect: 0
 sphere:
     point-x: 13
     point-y: 10
@@ -176,6 +206,7 @@ sphere:
     green: 255
     blue: 255
     specular: 500
+    reflect: 0
 sphere:
     point-x: 13
     point-y: -10
@@ -185,12 +216,14 @@ sphere:
     green: 255
     blue: 255
     specular: 500
+    reflect: 0
 sphere:
     point-x: 0
     point-y: -6
-    point-z: 24
-    radius: 2
+    point-z: 35
+    radius: 4
     red: 255
     green: 0
     blue: 0
     specular: 500
+    reflect: 9

@@ -79,4 +79,5 @@ sphere:
     red: 50
     green: 150
     blue: 240
+    reflect: 2
     specular: 500
